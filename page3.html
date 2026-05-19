@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birthday Picture Puzzle</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: #3b0b56;
+      color: white;
+      overflow-x: hidden;
+      padding: 30px;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 159, 179, 0.16), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(255, 215, 107, 0.13), transparent 24%),
+        radial-gradient(circle at 50% 88%, rgba(184, 247, 230, 0.12), transparent 28%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 3000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 24px;
+      background: #fff5d7;
+      color: #3b0b56;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.24);
+      transition: 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #ffd76b;
+      transform: translateY(-2px);
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 34px;
+      padding-top: 34px;
+    }
+
+    .small-label {
+      display: inline-block;
+      padding: 9px 20px;
+      background: #fff5d7;
+      color: #5b1475;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+    }
+
+    .header-section h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 72px;
+      margin: 8px 0;
+      color: #ffc8dd;
+      font-weight: 400;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.30);
+    }
+
+    .header-section p {
+      color: #b8f7e6;
+      font-size: 18px;
+      margin: 8px auto;
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .gallery-card,
+    .puzzle-card {
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.16),
+        rgba(255,255,255,0.08)
+      );
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 32px;
+      padding: 26px;
+      box-shadow:
+        0 26px 60px rgba(0,0,0,0.34),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-card::before,
+    .puzzle-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      top: -90px;
+      left: -90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,159,179,0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .gallery-card h2,
+    .puzzle-card h2 {
+      text-align: center;
+      color: #ffd76b;
+      margin-top: 0;
+      font-size: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-card p,
+    .puzzle-card p {
+      text-align: center;
+      color: #e6d7ff;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.30);
+      border: 2px solid rgba(255,255,255,0.18);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.42);
+    }
+
+    .puzzle-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reference-image-box {
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .reference-image-box img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 22px;
+      border: 3px solid rgba(255,215,107,0.75);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    }
+
+    .reference-image-box div {
+      margin-top: 8px;
+      color: #fff5d7;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .puzzle-board {
+      width: 330px;
+      height: 330px;
+      display: grid;
+      grid-template-columns: repeat(3, 110px);
+      grid-template-rows: repeat(3, 110px);
+      gap: 4px;
+      padding: 4px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.16);
+      box-shadow:
+        0 16px 34px rgba(0,0,0,0.35),
+        inset 0 0 20px rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .puzzle-piece {
+      width: 110px;
+      height: 110px;
+      background-image: url("puzzle-photo.jpg");
+      background-size: 330px 330px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.65);
+      transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .puzzle-piece:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 18px rgba(255,215,107,0.65);
+    }
+
+    .puzzle-piece.selected {
+      border: 4px solid #ffd76b;
+      transform: scale(1.06);
+      box-shadow:
+        0 0 12px #ffd76b,
+        0 0 24px rgba(255,215,107,0.75);
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      border: none;
+      padding: 11px 20px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #3b0b56;
+      background: #fff5d7;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.24);
+      transition: 0.3s ease;
+    }
+
+    .control-btn:hover {
+      background: #ffd76b;
+      transform: translateY(-2px);
+    }
+
+    .status-box {
+      margin-top: 18px;
+      text-align: center;
+      color: #ffd76b;
+      font-weight: 700;
+      min-height: 28px;
+      line-height: 1.5;
+    }
+
+    .success-message {
+      color: #b8f7e6;
+    }
+
+    .sparkle,
+    .soft-star,
+    .mini-confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .sparkle {
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff, 0 0 22px #ffd76b;
+      animation: sparkleBlink 1.4s ease-out forwards;
+    }
+
+    .soft-star {
+      color: #ffd76b;
+      animation: starFloat 2.4s ease-in-out forwards;
+      text-shadow: 0 0 8px rgba(255,255,255,0.9);
+    }
+
+    .mini-confetti {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: confettiDrop 3.8s ease-out forwards;
+    }
+
+    @keyframes sparkleBlink {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1.8);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    @keyframes starFloat {
+      0% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1.25) rotate(80deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.3) rotate(180deg);
+      }
+    }
+
+    @keyframes confettiDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-40px) rotate(0deg);
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(160px) rotate(220deg);
+      }
+    }
+
+    @media(max-width:900px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-section h1 {
+        font-size: 54px;
+      }
+
+      .gallery-grid img {
+        height: 145px;
+      }
+    }
+
+    @media(max-width:520px) {
+      body {
+        padding: 18px;
+      }
+
+      .puzzle-board {
+        width: 300px;
+        height: 300px;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+      }
+
+      .puzzle-piece {
+        width: 100px;
+        height: 100px;
+        background-size: 300px 300px;
+      }
+
+      .reference-image-box img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="back-btn" onclick="goBack()">Back</button>
+
+  <div class="page-wrapper">
+
+    <section class="header-section">
+      <div class="small-label">Puzzle Challenge</div>
+      <h1>Picture Puzzle</h1>
+      <p>
+        Enjoy the memory gallery, then arrange the mixed puzzle pieces to form the correct picture.
+        Once the picture is completed, the scrapbook will unlock.
+      </p>
+    </section>
+
+    <section class="main-grid">
+
+      <div class="gallery-card">
+        <h2>Image Gallery</h2>
+        <p>Some beautiful moments collected for this special birthday surprise.</p>
+
+        <div class="gallery-grid">
+          <img src="gallery1.jpg" alt="Gallery Image 1">
+          <img src="gallery2.jpg" alt="Gallery Image 2">
+          <img src="gallery3.jpg" alt="Gallery Image 3">
+          <img src="gallery4.jpg" alt="Gallery Image 4">
+          <img src="gallery5.jpg" alt="Gallery Image 5">
+          <img src="gallery6.jpg" alt="Gallery Image 6">
+        </div>
+      </div>
+
+      <div class="puzzle-card">
+        <h2>Re-Puzzle the Image</h2>
+        <p>Click one puzzle piece, then click another piece to swap them.</p>
+
+        <div class="puzzle-layout">
+
+          <div class="reference-image-box">
+            <img src="puzzle-photo.jpg" alt="Puzzle Reference Image">
+            <div>Reference Image</div>
+          </div>
+
+          <div class="puzzle-board" id="puzzleBoard"></div>
+
+          <div class="controls">
+            <button class="control-btn" onclick="shufflePuzzle()">Shuffle Again</button>
+            <button class="control-btn" onclick="showHint()">Hint</button>
+          </div>
+
+          <div class="status-box" id="puzzleStatus">
+            Arrange the image correctly to continue.
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script>
+    const correctOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+    let currentOrder = [4, 1, 7, 3, 0, 5, 8, 2, 6];
+
+    let selectedIndex = null;
+
+    const puzzleBoard = document.getElementById("puzzleBoard");
+    const puzzleStatus = document.getElementById("puzzleStatus");
+
+    function createPuzzle() {
+      puzzleBoard.innerHTML = "";
+
+      currentOrder.forEach(function(pieceNumber, index) {
+        const piece = document.createElement("div");
+
+        piece.className = "puzzle-piece";
+        piece.dataset.index = index;
+        piece.dataset.piece = pieceNumber;
+
+        const row = Math.floor(pieceNumber / 3);
+        const col = pieceNumber % 3;
+
+        if (window.innerWidth <= 520) {
+          piece.style.backgroundSize = "300px 300px";
+          piece.style.backgroundPosition = "-" + (col * 100) + "px -" + (row * 100) + "px";
+        } else {
+          piece.style.backgroundSize = "330px 330px";
+          piece.style.backgroundPosition = "-" + (col * 110) + "px -" + (row * 110) + "px";
+        }
+
+        piece.addEventListener("click", function() {
+          selectPiece(index);
+        });
+
+        puzzleBoard.appendChild(piece);
+      });
+    }
+
+    function selectPiece(index) {
+      const pieces = document.querySelectorAll(".puzzle-piece");
+
+      if (selectedIndex === null) {
+        selectedIndex = index;
+        pieces[index].classList.add("selected");
+        puzzleStatus.innerHTML = "Now select another piece to swap.";
+        puzzleStatus.className = "status-box";
+        return;
+      }
+
+      if (selectedIndex === index) {
+        selectedIndex = null;
+        createPuzzle();
+        puzzleStatus.innerHTML = "Selection cleared. Choose a piece again.";
+        puzzleStatus.className = "status-box";
+        return;
+      }
+
+      const temp = currentOrder[selectedIndex];
+      currentOrder[selectedIndex] = currentOrder[index];
+      currentOrder[index] = temp;
+
+      selectedIndex = null;
+
+      createPuzzle();
+      checkPuzzle();
+    }
+
+    function checkPuzzle() {
+      const completed = currentOrder.every(function(value, index) {
+        return value === correctOrder[index];
+      });
+
+      if (completed) {
+        puzzleStatus.innerHTML = "Perfect! Puzzle completed. Opening scrapbook...";
+        puzzleStatus.className = "status-box success-message";
+
+        launchSuccessEffects();
+
+        setTimeout(function() {
+          window.location.href = "scrapbook.html";
+        }, 1600);
+      } else {
+        puzzleStatus.innerHTML = "Good try! Keep arranging the pieces.";
+        puzzleStatus.className = "status-box";
+      }
+    }
+
+    function shufflePuzzle() {
+      currentOrder = [4, 1, 7, 3, 0, 5, 8, 2, 6];
+      selectedIndex = null;
+      createPuzzle();
+      puzzleStatus.innerHTML = "Puzzle shuffled again. Try arranging it correctly.";
+      puzzleStatus.className = "status-box";
+    }
+
+    function showHint() {
+      puzzleStatus.innerHTML = "Hint: Use the reference image above and match each section row by row.";
+      puzzleStatus.className = "status-box";
+    }
+
+    function goBack() {
+      window.location.href = "page4.html";
+    }
+
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = Math.random() * window.innerHeight + "px";
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(function() {
+        sparkle.remove();
+      }, 1500);
+    }
+
+    function createSoftStar() {
+      const star = document.createElement("div");
+      const stars = ["✦", "✧", "★", "☆"];
+
+      star.className = "soft-star";
+      star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.fontSize = 12 + Math.random() * 20 + "px";
+
+      document.body.appendChild(star);
+
+      setTimeout(function() {
+        star.remove();
+      }, 2600);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      const colors = ["#ff9fb3", "#ffd76b", "#b8f7e6", "#e6d7ff", "#ffffff"];
+
+      confetti.className = "mini-confetti";
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.top = Math.random() * window.innerHeight * 0.45 + "px";
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.transform = "rotate(" + Math.random() * 180 + "deg)";
+
+      document.body.appendChild(confetti);
+
+      setTimeout(function() {
+        confetti.remove();
+      }, 3900);
+    }
+
+    function launchSuccessEffects() {
+      for (let i = 0; i < 25; i++) {
+        setTimeout(createConfetti, i * 60);
+        setTimeout(createSparkle, i * 50);
+      }
+    }
+
+    setInterval(createSparkle, 240);
+    setInterval(createSoftStar, 300);
+    setInterval(createConfetti, 600);
+
+    createPuzzle();
+
+    window.addEventListener("resize", function() {
+      createPuzzle();
+    });
+  </script>
+
+</body>
+</html>

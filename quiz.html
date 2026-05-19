@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birthday Quiz</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: #3b0b56;
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 159, 179, 0.16), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(255, 215, 107, 0.13), transparent 24%),
+        radial-gradient(circle at 50% 88%, rgba(184, 247, 230, 0.12), transparent 28%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 3000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 24px;
+      background: #fff5d7;
+      color: #3b0b56;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.24);
+      transition: 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #ffd76b;
+      transform: translateY(-2px);
+    }
+
+    .header-section {
+      text-align: center;
+      padding-top: 34px;
+      margin-bottom: 30px;
+    }
+
+    .small-label {
+      display: inline-block;
+      padding: 9px 20px;
+      background: #fff5d7;
+      color: #5b1475;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+    }
+
+    .header-section h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 72px;
+      margin: 8px 0;
+      color: #ffc8dd;
+      font-weight: 400;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.30);
+    }
+
+    .header-section p {
+      color: #b8f7e6;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 760px;
+      margin: 8px auto;
+    }
+
+    .quiz-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 34px;
+      padding: 30px;
+      box-shadow: 0 28px 70px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.22);
+      backdrop-filter: blur(16px);
+    }
+
+    .question {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .question p {
+      color: #ffd76b;
+      font-weight: 700;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin: 9px 0;
+      cursor: pointer;
+      color: #fff5d7;
+    }
+
+    input {
+      margin-right: 8px;
+    }
+
+    .submit-btn {
+      display: block;
+      margin: 28px auto 10px;
+      padding: 14px 34px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #ff9fb3, #ffd76b);
+      color: #3b0b56;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.30);
+      transition: 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: linear-gradient(135deg, #ffd76b, #b8f7e6);
+    }
+
+    #quizResult {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    .sparkle,
+    .soft-star,
+    .mini-confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .sparkle {
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff, 0 0 22px #ffd76b;
+      animation: sparkleBlink 1.4s ease-out forwards;
+    }
+
+    .soft-star {
+      color: #ffd76b;
+      animation: starFloat 2.4s ease-in-out forwards;
+      text-shadow: 0 0 8px rgba(255,255,255,0.9);
+    }
+
+    .mini-confetti {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: confettiDrop 3.8s ease-out forwards;
+    }
+
+    @keyframes sparkleBlink {
+      0% { opacity: 0; transform: scale(0); }
+      40% { opacity: 1; transform: scale(1.8); }
+      100% { opacity: 0; transform: scale(0); }
+    }
+
+    @keyframes starFloat {
+      0% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+      40% { opacity: 1; transform: scale(1.25) rotate(80deg); }
+      100% { opacity: 0; transform: scale(0.3) rotate(180deg); }
+    }
+
+    @keyframes confettiDrop {
+      0% { opacity: 0; transform: translateY(-40px) rotate(0deg); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(160px) rotate(220deg); }
+    }
+
+    @media(max-width:700px) {
+      body {
+        padding: 20px;
+      }
+
+      .header-section h1 {
+        font-size: 52px;
+      }
+
+      .quiz-card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="back-btn" onclick="goBack()">Back</button>
+
+  <div class="page-wrapper">
+
+    <section class="header-section">
+      <div class="small-label">Birthday Quiz</div>
+      <h1>Memory Quiz</h1>
+      <p>Answer 10 questions. Score 80% or above to unlock the next birthday surprise.</p>
+    </section>
+
+    <main class="quiz-card">
+      <form id="quizForm">
+
+        <div class="question">
+          <p>1. What colour dress made you stare at me instead of your phone on 1st day ?</p>
+          <label><input type="radio" name="q1" value="1"> Blue </label>
+          <label><input type="radio" name="q1" value="0"> Red </label>
+          <label><input type="radio" name="q1" value="0"> Pink </label>
+        </div>
+
+        <div class="question">
+          <p>2. What did I call my first phone's weird name ?</p>
+          <label><input type="radio" name="q2" value="0"> Jeenu </label>
+          <label><input type="radio" name="q2" value="1"> Jeeju </label>
+          <label><input type="radio" name="q2" value="0"> Jeeku </label>
+        </div>
+
+        <div class="question">
+          <p>3. First stop, Post proposal?</p>
+          <label><input type="radio" name="q3" value="0"> Office </label>
+          <label><input type="radio" name="q3" value="1"> Temple </label>
+          <label><input type="radio" name="q3" value="0"> Cafe </label>
+        </div>
+
+        <div class="question">
+          <p>4. 1st trip : Which place?</p>
+          <label><input type="radio" name="q4" value="0"> Malampuzha Dam, Kerala </label>
+          <label><input type="radio" name="q4" value="0"> Wayanad, Kerala </label>
+          <label><input type="radio" name="q4" value="1"> Falls, Pollachi </label>
+        </div>
+
+        <div class="question">
+          <p>5. First Movie?</p>
+          <label><input type="radio" name="q5" value="0"> Pichaikkaran 2 </label>
+          <label><input type="radio" name="q5" value="0"> Don </label>
+          <label><input type="radio" name="q5" value="1"> Dada </label>
+        </div>
+
+        <div class="question">
+          <p>6. My top emoji ?</p>
+          <label><input type="radio" name="q6" value="0"> ♥️ </label>
+          <label><input type="radio" name="q6" value="1"> 🦋 </label>
+          <label><input type="radio" name="q6" value="0"> 😂 </label>
+        </div>
+
+        <div class="question">
+          <p>7. Our 1st anniversary spot?</p>
+          <label><input type="radio" name="q7" value="1"> Orphanage </label>
+          <label><input type="radio" name="q7" value="0"> Food provision to needy </label>
+          <label><input type="radio" name="q7" value="0"> Human Animal Society </label>
+        </div>
+
+        <div class="question">
+          <p>8. First Mall together?</p>
+          <label><input type="radio" name="q8" value="1"> Prozone mall </label>
+          <label><input type="radio" name="q8" value="0"> Brooks </label>
+          <label><input type="radio" name="q8" value="0"> Fun mall </label>
+        </div>
+
+        <div class="question">
+          <p>9. Day 1 contact name of yours ?</p>
+          <label><input type="radio" name="q9" value="0"> Sibi Wipro Dance </label>
+          <label><input type="radio" name="q9" value="0"> Sibi Wipro </label>
+          <label><input type="radio" name="q9" value="1"> Cb Wipro Dance </label>
+        </div>
+
+        <div class="question">
+          <p>10. This quiz is for?</p>
+          <label><input type="radio" name="q10" value="0"> A birthday surprise</label>
+          <label><input type="radio" name="q10" value="1"> To prove Cb's Getting Old </label>
+          <label><input type="radio" name="q10" value="0"> To Roast with memories </label>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+      </form>
+
+      <div id="quizResult"></div>
+    </main>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "page2.html";
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      const totalQuestions = 10;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const selected = document.querySelector('input[name="q' + i + '"]:checked');
+
+        if (selected) {
+          score += Number(selected.value);
+        }
+      }
+
+      const percentage = (score / totalQuestions) * 100;
+      const result = document.getElementById("quizResult");
+
+      result.innerHTML = "Your score is " + percentage + "%";
+
+      if (percentage >= 80) {
+        result.innerHTML += "<br>Excellent! Next surprise unlocked.";
+        result.style.color = "#b8f7e6";
+        launchSuccessEffects();
+
+        setTimeout(function () {
+          window.location.href = "page4.html";
+        }, 1500);
+      } else {
+        result.innerHTML += "<br>Please try again. You need 80% or above.";
+        result.style.color = "#ff9fb3";
+      }
+    }
+
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = Math.random() * window.innerHeight + "px";
+      document.body.appendChild(sparkle);
+
+      setTimeout(function () {
+        sparkle.remove();
+      }, 1500);
+    }
+
+    function createSoftStar() {
+      const star = document.createElement("div");
+      const stars = ["✦", "✧", "★", "☆"];
+      star.className = "soft-star";
+      star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.fontSize = 12 + Math.random() * 20 + "px";
+      document.body.appendChild(star);
+
+      setTimeout(function () {
+        star.remove();
+      }, 2600);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      const colors = ["#ff9fb3", "#ffd76b", "#b8f7e6", "#e6d7ff", "#ffffff"];
+
+      confetti.className = "mini-confetti";
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.top = Math.random() * window.innerHeight * 0.45 + "px";
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.transform = "rotate(" + Math.random() * 180 + "deg)";
+      document.body.appendChild(confetti);
+
+      setTimeout(function () {
+        confetti.remove();
+      }, 3900);
+    }
+
+    function launchSuccessEffects() {
+      for (let i = 0; i < 25; i++) {
+        setTimeout(createConfetti, i * 60);
+        setTimeout(createSparkle, i * 50);
+      }
+    }
+
+    setInterval(createSparkle, 260);
+    setInterval(createSoftStar, 320);
+    setInterval(createConfetti, 700);
+  </script>
+
+</body>
+</html>

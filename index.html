@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Happy Birthday Sibi - Welcome</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --deep1: #2b0533;
+      --deep2: #3b0b56;
+      --accent: #ff9fb3;
+      --gold: #ffd76b;
+      --pink: #ff5a8a;
+      --mint: #b8f7e6;
+      --cream: #fff5d7;
+      --lavender: #e6d7ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, var(--deep1), var(--deep2));
+      overflow: hidden;
+      color: white;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,159,179,0.18), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(255,215,107,0.15), transparent 24%),
+        radial-gradient(circle at 50% 88%, rgba(184,247,230,0.13), transparent 28%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -120px;
+      background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(255,255,255,0.05),
+        transparent,
+        rgba(255,215,107,0.06),
+        transparent,
+        rgba(255,159,179,0.05),
+        transparent
+      );
+      animation: rotateRays 16s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .top-actions {
+      position: fixed;
+      left: 14px;
+      top: 14px;
+      z-index: 6000;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #ffffff, #ffe6ef);
+      padding: 10px 17px;
+      border-radius: 24px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #3b0b56;
+      font-weight: 700;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #ff9fb3, #ffd76b);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 3000;
+      width: 92%;
+      max-width: 1100px;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .birthday-badge {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: 30px;
+      background: rgba(255,245,215,0.95);
+      color: #5b1475;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .initials {
+      font-family: "Great Vibes", cursive;
+      font-size: 150px;
+      line-height: 1;
+      color: #ffc1d2;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+      animation: ultraGlow 2s infinite alternate;
+      text-shadow:
+        0 0 10px #ffffff,
+        0 0 24px #ff9fb3,
+        0 0 44px #ff5a8a,
+        0 0 70px #ff5a8a,
+        0 0 100px #ffd76b,
+        0 0 135px #ffffff;
+    }
+
+    .subtitle-chip {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      background: rgba(184,247,230,0.14);
+      border: 1px solid rgba(184,247,230,0.28);
+      color: var(--mint);
+      font-size: 15px;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+    }
+
+    .lead {
+      font-size: 23px;
+      margin-top: 28px;
+      opacity: 0;
+      color: rgba(255,255,255,0.96);
+      letter-spacing: 0.5px;
+      transition: opacity 0.8s ease;
+      font-weight: 500;
+    }
+
+    .line2 {
+      font-size: 21px;
+      margin-top: 14px;
+      opacity: 0;
+      color: var(--cream);
+      font-weight: 600;
+      transition: opacity 0.8s ease;
+    }
+
+    .click-heart {
+      display: inline-block;
+      margin-left: 8px;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 30px;
+      animation: heartbeat 1.5s infinite;
+      text-shadow: 0 0 12px #ffffff, 0 0 22px #ffd76b;
+    }
+
+    .countdown-text {
+      margin-top: 30px;
+      color: var(--lavender);
+      font-size: 15px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .progress-wrap {
+      margin: 18px auto 0;
+      width: 58%;
+      height: 9px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.18);
+    }
+
+    .progress-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff5a8a, #ff9fb3, #ffd76b, #b8f7e6);
+      box-shadow: 0 0 20px rgba(255,159,179,0.8);
+      transition: width 10s linear;
+    }
+
+    .progress-indicator {
+      position: absolute;
+      left: 0;
+      top: -7px;
+      width: 13px;
+      height: 23px;
+      background: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 18px #ffffff, 0 0 30px #ffd76b;
+      transition: left 10s linear;
+    }
+
+    .bottom-note {
+      margin-top: 22px;
+      font-size: 14px;
+      color: rgba(255,245,215,0.9);
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .visual-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(1px);
+      animation: orbFloat 8s ease-in-out infinite alternate;
+      z-index: 3;
+    }
+
+    .orb-one {
+      width: 210px;
+      height: 210px;
+      top: 12%;
+      left: 8%;
+      background: radial-gradient(circle, rgba(255,159,179,0.25), transparent 70%);
+    }
+
+    .orb-two {
+      width: 160px;
+      height: 160px;
+      bottom: 10%;
+      right: 8%;
+      background: radial-gradient(circle, rgba(255,215,107,0.20), transparent 72%);
+      animation-delay: 1s;
+    }
+
+    .orb-three {
+      width: 130px;
+      height: 130px;
+      top: 18%;
+      right: 20%;
+      background: radial-gradient(circle, rgba(184,247,230,0.18), transparent 72%);
+      animation-delay: 2s;
+    }
+
+    #sideParticles,
+    #staticBubbleArea,
+    #movingBubbleArea,
+    #whiteHeartArea,
+    #sparkleArea,
+    #crackerArea,
+    #butterflyArea {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #staticBubbleArea {
+      z-index: 500;
+    }
+
+    #movingBubbleArea {
+      z-index: 520;
+    }
+
+    #sideParticles {
+      z-index: 540;
+    }
+
+    #whiteHeartArea {
+      z-index: 560;
+    }
+
+    #crackerArea {
+      z-index: 580;
+    }
+
+    #sparkleArea {
+      z-index: 2600;
+    }
+
+    #butterflyArea {
+      z-index: 9999;
+    }
+
+    .particle {
+      position: absolute;
+      will-change: transform, opacity;
+      opacity: 0;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.25));
+    }
+
+    .particle.star {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #ffd76b, #ffb86b);
+    }
+
+    .particle.soft-heart {
+      color: rgba(255,255,255,0.88);
+      font-size: 24px;
+      text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255,255,255,0.75);
+    }
+
+    .static-bubble {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.09);
+      box-shadow: inset 0 0 16px rgba(255,255,255,0.18);
+      opacity: 0.75;
+    }
+
+    .moving-bubble {
+      position: absolute;
+      bottom: -90px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.58);
+      background: rgba(255,255,255,0.10);
+      box-shadow: inset 0 0 18px rgba(255,255,255,0.18);
+      animation: bubbleMoveUp linear forwards;
+    }
+
+    .white-heart {
+      position: absolute;
+      bottom: -50px;
+      color: rgba(255,255,255,0.96);
+      font-size: 18px;
+      text-shadow:
+        0 0 8px #ffffff,
+        0 0 18px rgba(255,255,255,0.75),
+        0 0 28px rgba(255,215,107,0.45);
+      animation: whiteHeartFloat linear forwards, whiteHeartBlink 1.4s ease-in-out infinite;
+    }
+
+    .butterfly {
+      position: absolute;
+      bottom: -80px;
+      font-size: 44px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9999;
+      animation: oldBlueButterflyFly linear forwards;
+    }
+
+    .butterfly-icon {
+      display: inline-block;
+      filter:
+        drop-shadow(0 0 10px rgba(255,255,255,0.95))
+        drop-shadow(0 0 20px rgba(91,207,255,0.95));
+      animation: oldBlueButterflyWing 0.55s ease-in-out infinite;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow:
+        0 0 10px #ffffff,
+        0 0 22px #ffd76b,
+        0 0 36px #ff9fb3;
+      animation: sparkleBlink 1.4s ease-out forwards;
+    }
+
+    .cracker {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: burst 1.2s ease-out forwards;
+    }
+
+    @keyframes ultraGlow {
+      0% {
+        text-shadow:
+          0 0 10px #ffffff,
+          0 0 24px #ff9fb3,
+          0 0 44px #ff5a8a,
+          0 0 70px #ff5a8a,
+          0 0 100px #ffd76b;
+        transform: scale(1);
+      }
+
+      100% {
+        text-shadow:
+          0 0 22px #ffffff,
+          0 0 42px #ff9fb3,
+          0 0 68px #ff5a8a,
+          0 0 105px #ffd76b,
+          0 0 145px #ffffff;
+        transform: scale(1.045);
+      }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    @keyframes rotateRays {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes orbFloat {
+      from {
+        transform: translateY(0) scale(1);
+      }
+
+      to {
+        transform: translateY(-35px) scale(1.12);
+      }
+    }
+
+    @keyframes floatAcross {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-40vh) translateX(120vw) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes floatAcrossLeft {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-40vh) translateX(-120vw) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes bubbleMoveUp {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-115vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes whiteHeartFloat {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-115vh) translateX(35px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes whiteHeartBlink {
+      0%, 100% {
+        opacity: 0.35;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes oldBlueButterflyFly {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 1;
+      }
+
+      25% {
+        transform: translateY(-28vh) translateX(45px) rotate(10deg) scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(-58vh) translateX(-35px) rotate(-10deg) scale(1.12);
+        opacity: 1;
+      }
+
+      75% {
+        transform: translateY(-88vh) translateX(55px) rotate(12deg) scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-125vh) translateX(-25px) rotate(-8deg) scale(1.25);
+        opacity: 0;
+      }
+    }
+
+    @keyframes oldBlueButterflyWing {
+      0%, 100% {
+        transform: scaleX(1) scaleY(1) rotate(0deg);
+      }
+
+      50% {
+        transform: scaleX(0.72) scaleY(1.18) rotate(6deg);
+      }
+    }
+
+    @keyframes sparkleBlink {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      40% {
+        transform: scale(1.8);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes burst {
+      0% {
+        transform: scale(0.5);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(3) translateY(-50px);
+        opacity: 0;
+      }
+    }
+
+    @media(max-width:720px) {
+      .initials {
+        font-size: 86px;
+      }
+
+      .lead,
+      .line2 {
+        font-size: 16px;
+      }
+
+      .progress-wrap {
+        width: 84%;
+      }
+
+      .birthday-badge {
+        font-size: 12px;
+      }
+
+      .butterfly {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-actions">
+    <button id="audioToggle" class="btn" aria-pressed="false">Play Music</button>
+  </div>
+
+  <audio id="pageAudio" playsinline loop preload="auto">
+    <source src="Majnu-Bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="visual-orb orb-one"></div>
+  <div class="visual-orb orb-two"></div>
+  <div class="visual-orb orb-three"></div>
+
+  <main class="main-content" role="main">
+    <div class="birthday-badge" id="birthdayBadge">
+      Error 404: Aging detected 
+    </div>
+
+    <div class="initials" id="initials">
+      Congrats! You Unlocked Level 26!
+    </div>
+
+    <div class="subtitle-chip" id="subtitleChip">
+      Made with 98% love, 1% panic coding and 1% 3am debugging
+    </div>
+
+    <div class="lead" id="lead">
+      Free pass to use my G-pay!
+      <span class="click-heart" id="heartBtn">♡</span>
+    </div>
+
+    <div class="line2" id="line2">
+      Installing Birthday Update 26.0 
+    </div>
+
+    <div class="countdown-text" id="countdownText">
+      15 Seconds until the plot twist begins... dun dun dunnn...
+    </div>
+
+    <div class="progress-wrap" id="progressWrap" aria-hidden="true">
+      <div class="progress-bar" id="progressBar"></div>
+      <div class="progress-indicator" id="progressIndicator"></div>
+    </div>
+
+    <div class="bottom-note" id="bottomNote">
+      Get ready My Man!
+    </div>
+  </main>
+
+  <div id="sideParticles" aria-hidden="true"></div>
+  <div id="staticBubbleArea" aria-hidden="true"></div>
+  <div id="movingBubbleArea" aria-hidden="true"></div>
+  <div id="whiteHeartArea" aria-hidden="true"></div>
+  <div id="sparkleArea" aria-hidden="true"></div>
+  <div id="crackerArea" aria-hidden="true"></div>
+  <div id="butterflyArea" aria-hidden="true"></div>
+
+  <script>
+    const audio = document.getElementById("pageAudio");
+    const audioToggle = document.getElementById("audioToggle");
+
+    function saveAudioState() {
+      if (!audio) {
+        return;
+      }
+
+      sessionStorage.setItem("birthdayAudioTime", audio.currentTime || 0);
+      sessionStorage.setItem("birthdayAudioPaused", audio.paused ? "true" : "false");
+    }
+
+    function restoreAudioState() {
+      if (!audio) {
+        return;
+      }
+
+      const savedTime = sessionStorage.getItem("birthdayAudioTime");
+      const wasPaused = sessionStorage.getItem("birthdayAudioPaused");
+
+      if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+      }
+
+      if (wasPaused === "false") {
+        playAudio();
+      }
+    }
+
+    async function playAudio() {
+      if (!audio || !audioToggle) {
+        return;
+      }
+
+      try {
+        audio.muted = false;
+        audio.volume = 0.8;
+        await audio.play();
+
+        audioToggle.textContent = "Pause Music";
+        audioToggle.setAttribute("aria-pressed", "true");
+        sessionStorage.setItem("birthdayAudioPaused", "false");
+      } catch (error) {
+        audioToggle.textContent = "Play Music";
+        audioToggle.setAttribute("aria-pressed", "false");
+      }
+    }
+
+    function pauseAudio() {
+      if (!audio || !audioToggle) {
+        return;
+      }
+
+      audio.pause();
+      audioToggle.textContent = "Play Music";
+      audioToggle.setAttribute("aria-pressed", "false");
+      sessionStorage.setItem("birthdayAudioPaused", "true");
+    }
+
+    if (audioToggle) {
+      audioToggle.addEventListener("click", function () {
+        if (audio.paused) {
+          playAudio();
+        } else {
+          pauseAudio();
+        }
+      });
+    }
+
+    if (audio) {
+      audio.addEventListener("timeupdate", saveAudioState);
+    }
+
+    window.addEventListener("beforeunload", saveAudioState);
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const badge = document.getElementById("birthdayBadge");
+      const initials = document.getElementById("initials");
+      const subtitleChip = document.getElementById("subtitleChip");
+      const lead = document.getElementById("lead");
+      const line2 = document.getElementById("line2");
+      const countdownText = document.getElementById("countdownText");
+      const bottomNote = document.getElementById("bottomNote");
+      const progressWrap = document.getElementById("progressWrap");
+      const progressBar = document.getElementById("progressBar");
+      const progressIndicator = document.getElementById("progressIndicator");
+      const heartBtn = document.getElementById("heartBtn");
+
+      restoreAudioState();
+
+      requestAnimationFrame(function () {
+        if (badge) {
+          badge.style.opacity = "1";
+          badge.style.transform = "translateY(0)";
+        }
+
+        if (initials) {
+          initials.style.opacity = "1";
+          initials.style.transform = "translateY(0)";
+        }
+      });
+
+      if (subtitleChip) {
+        setTimeout(function () {
+          subtitleChip.style.opacity = "1";
+        }, 250);
+      }
+
+      if (lead) {
+        setTimeout(function () {
+          lead.style.opacity = "1";
+        }, 500);
+      }
+
+      if (line2) {
+        setTimeout(function () {
+          line2.style.opacity = "1";
+        }, 800);
+      }
+
+      setTimeout(function () {
+        if (countdownText) {
+          countdownText.style.opacity = "1";
+        }
+
+        if (bottomNote) {
+          bottomNote.style.opacity = "1";
+        }
+      }, 1500);
+
+      if (progressWrap && progressBar && progressIndicator) {
+        setTimeout(function () {
+          progressWrap.style.opacity = "1";
+
+          setTimeout(function () {
+            progressBar.style.width = "100%";
+            progressIndicator.style.left = "100%";
+          }, 50);
+        }, 1500);
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const cameFromBack = urlParams.get("fromBack") === "true";
+
+      if (!cameFromBack) {
+        setTimeout(function () {
+          saveAudioState();
+          window.location.href = "page2.html";
+        }, 15000);
+      }
+
+      if (heartBtn) {
+        heartBtn.addEventListener("click", function () {
+          saveAudioState();
+          window.location.href = "page2.html";
+        });
+      }
+
+      createStaticBubbles();
+
+      setInterval(createMovingBubble, 500);
+      setInterval(createWhiteHeart, 420);
+      setInterval(createSideParticle, 740);
+      setInterval(createSparkle, 150);
+      setInterval(launchCracker, 720);
+      setInterval(createButterfly, 700);
+    });
+
+    function createStaticBubbles() {
+      const area = document.getElementById("staticBubbleArea");
+
+      if (!area) {
+        return;
+      }
+
+      area.innerHTML = "";
+
+      for (let i = 0; i < 28; i++) {
+        const bubble = document.createElement("div");
+        const size = 18 + Math.random() * 62;
+
+        bubble.className = "static-bubble";
+        bubble.style.width = size + "px";
+        bubble.style.height = size + "px";
+        bubble.style.left = Math.random() * window.innerWidth + "px";
+        bubble.style.top = Math.random() * window.innerHeight + "px";
+
+        area.appendChild(bubble);
+      }
+    }
+
+    function createMovingBubble() {
+      const area = document.getElementById("movingBubbleArea");
+
+      if (!area) {
+        return;
+      }
+
+      const bubble = document.createElement("div");
+      const size = 14 + Math.random() * 46;
+
+      bubble.className = "moving-bubble";
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+      bubble.style.left = Math.random() * window.innerWidth + "px";
+      bubble.style.animationDuration = 6 + Math.random() * 6 + "s";
+
+      area.appendChild(bubble);
+
+      setTimeout(function () {
+        bubble.remove();
+      }, 12000);
+    }
+
+    function createWhiteHeart() {
+      const area = document.getElementById("whiteHeartArea");
+
+      if (!area) {
+        return;
+      }
+
+      const heart = document.createElement("div");
+      const hearts = ["♡", "♥"];
+
+      heart.className = "white-heart";
+      heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.fontSize = 14 + Math.random() * 20 + "px";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+      area.appendChild(heart);
+
+      setTimeout(function () {
+        heart.remove();
+      }, 11000);
+    }
+
+    function createButterfly() {
+      const area = document.getElementById("butterflyArea");
+
+      if (!area) {
+        return;
+      }
+
+      const butterfly = document.createElement("div");
+
+      butterfly.className = "butterfly";
+      butterfly.style.left = Math.random() * window.innerWidth + "px";
+      butterfly.style.animationDuration = 6 + Math.random() * 5 + "s";
+      butterfly.innerHTML = '<span class="butterfly-icon">🦋</span>';
+
+      area.appendChild(butterfly);
+
+      setTimeout(function () {
+        butterfly.remove();
+      }, 12000);
+    }
+
+    function createSideParticle() {
+      const area = document.getElementById("sideParticles");
+
+      if (!area) {
+        return;
+      }
+
+      const particle = document.createElement("div");
+      const type = Math.random() > 0.45 ? "star" : "soft-heart";
+
+      particle.className = "particle " + type;
+
+      if (type === "soft-heart") {
+        particle.innerHTML = Math.random() > 0.5 ? "♡" : "♥";
+      }
+
+      const leftSide = Math.random() > 0.5;
+      const startY = Math.random() * window.innerHeight;
+
+      particle.style.top = startY + "px";
+      particle.style.left = leftSide ? "-40px" : window.innerWidth + "px";
+
+      const duration = 6 + Math.random() * 6;
+
+      if (leftSide) {
+        particle.style.animation = "floatAcross " + duration + "s linear forwards";
+      } else {
+        particle.style.animation = "floatAcrossLeft " + duration + "s linear forwards";
+      }
+
+      area.appendChild(particle);
+
+      setTimeout(function () {
+        particle.remove();
+      }, (duration + 2) * 1000);
+    }
+
+    function createSparkle() {
+      const area = document.getElementById("sparkleArea");
+
+      if (!area) {
+        return;
+      }
+
+      const sparkle = document.createElement("div");
+
+      sparkle.className = "sparkle";
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = Math.random() * window.innerHeight + "px";
+
+      area.appendChild(sparkle);
+
+      setTimeout(function () {
+        sparkle.remove();
+      }, 1500);
+    }
+
+    function launchCracker() {
+      const area = document.getElementById("crackerArea");
+
+      if (!area) {
+        return;
+      }
+
+      const cracker = document.createElement("div");
+
+      cracker.className = "cracker";
+      cracker.style.left = Math.random() * window.innerWidth + "px";
+      cracker.style.top = Math.random() * window.innerHeight + "px";
+      cracker.style.background = Math.random() > 0.5 ? "#ffffff" : "#ffd76b";
+
+      area.appendChild(cracker);
+
+      setTimeout(function () {
+        cracker.remove();
+      }, 1200);
+    }
+
+    window.addEventListener("resize", function () {
+      createStaticBubbles();
+    });
+  </script>
+
+</body>
+</html>

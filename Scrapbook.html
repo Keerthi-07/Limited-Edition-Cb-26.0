@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birthday Scrapbook</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: #3b0b56;
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 159, 179, 0.16), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(255, 215, 107, 0.13), transparent 24%),
+        radial-gradient(circle at 50% 88%, rgba(184, 247, 230, 0.12), transparent 28%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 3000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 24px;
+      background: #fff5d7;
+      color: #3b0b56;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.24);
+      transition: 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #ffd76b;
+      transform: translateY(-2px);
+    }
+
+    .header-section {
+      text-align: center;
+      padding-top: 34px;
+      margin-bottom: 34px;
+    }
+
+    .small-label {
+      display: inline-block;
+      padding: 9px 20px;
+      background: #fff5d7;
+      color: #5b1475;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+    }
+
+    .header-section h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 76px;
+      margin: 8px 0;
+      color: #ffc8dd;
+      font-weight: 400;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.30);
+    }
+
+    .header-section p {
+      color: #b8f7e6;
+      font-size: 18px;
+      max-width: 760px;
+      margin: 8px auto;
+      line-height: 1.6;
+    }
+
+    .scrapbook-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .scrap-card {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 28px;
+      align-items: center;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.16),
+        rgba(255,255,255,0.08)
+      );
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 32px;
+      padding: 26px;
+      box-shadow:
+        0 26px 60px rgba(0,0,0,0.34),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scrap-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      top: -90px;
+      left: -90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,159,179,0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .scrap-card.reverse {
+      grid-template-columns: 1fr 310px;
+    }
+
+    .scrap-card img {
+      width: 100%;
+      height: 235px;
+      object-fit: cover;
+      border-radius: 24px;
+      border: 2px solid rgba(255,255,255,0.18);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .scrap-card img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.45);
+    }
+
+    .scrap-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .scrap-text h2 {
+      color: #ffd76b;
+      font-size: 30px;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .scrap-text p {
+      color: #fff5d7;
+      font-size: 18px;
+      line-height: 1.9;
+      margin-bottom: 0;
+    }
+
+    .quote-box {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-left: 4px solid #ffd76b;
+      background: rgba(255,255,255,0.10);
+      border-radius: 14px;
+      color: #b8f7e6;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .final-message {
+      text-align: center;
+      margin: 44px auto 10px;
+      color: #ffc8dd;
+      font-family: 'Great Vibes', cursive;
+      font-size: 52px;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.30);
+    }
+
+    .footer-text {
+      text-align: center;
+      color: #ffd76b;
+      font-size: 18px;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .sparkle,
+    .soft-star,
+    .mini-confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .sparkle {
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff, 0 0 22px #ffd76b;
+      animation: sparkleBlink 1.4s ease-out forwards;
+    }
+
+    .soft-star {
+      color: #ffd76b;
+      animation: starFloat 2.4s ease-in-out forwards;
+      text-shadow: 0 0 8px rgba(255,255,255,0.9);
+    }
+
+    .mini-confetti {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: confettiDrop 3.8s ease-out forwards;
+    }
+
+    @keyframes sparkleBlink {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1.8);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    @keyframes starFloat {
+      0% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1.25) rotate(80deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.3) rotate(180deg);
+      }
+    }
+
+    @keyframes confettiDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-40px) rotate(0deg);
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(160px) rotate(220deg);
+      }
+    }
+
+    @media(max-width:850px) {
+      .scrap-card,
+      .scrap-card.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .header-section h1 {
+        font-size: 56px;
+      }
+
+      .scrap-card img {
+        height: 230px;
+      }
+    }
+
+    @media(max-width:520px) {
+      body {
+        padding: 18px;
+      }
+
+      .header-section h1 {
+        font-size: 46px;
+      }
+
+      .header-section p {
+        font-size: 16px;
+      }
+
+      .scrap-card {
+        padding: 20px;
+      }
+
+      .scrap-text h2 {
+        font-size: 24px;
+      }
+
+      .scrap-text p {
+        font-size: 16px;
+      }
+
+      .final-message {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="back-btn" onclick="goBack()">Back</button>
+
+  <div class="page-wrapper">
+
+    <section class="header-section">
+      <div class="small-label">Digital Scrapbook</div>
+
+      <h1>Scrapbook of Memories</h1>
+
+      <p>
+        A small collection of smiles, beautiful memories, and birthday wishes created with love.
+      </p>
+    </section>
+
+    <section class="scrapbook-grid">
+
+
+      <div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Raji</h2>
+
+    <p>
+      <strong>A dance you performed with you that holds a special place in my heart :</strong> 💖 Kandipa apdi podu dhan Adhu dhan sir Enakunu solikuduthadhu❤️ Micham elam avanga special akkaku dha solikuduthirukaru neraiya😜 Just joking thambu solithara elamey fav dhan❤️ 
+
+  <br><br><strong>My all-time favorite choreography of you:</strong> 🤩 Neraiya dance irukey! Special ah solanum na "inum konja neram" adhulaiyu special ah solanum na "என் கண்ணு போல இருக்கனும் என் புள்ளைக்கு தகப்பன் ஆகணும்" line choreography plus ninga rendu peru andha expression has my whole heart❤️
+
+  <br><br><strong>One liner about you: 😊 My sweet little fav thambu! ❤️ </strong> Enaku thambi ilanu feel paniruken ivanga elaraiyu pakuradhuku munadi Cibi thambu is special one in that list ❤️
+
+  <br><br><strong> A cherished memory in dance:</strong>  💭 Its been 10 years na dance pani Enaku epavu oru inferiority complex enala mudiyadhunu Unmaiya solanuna thambu ninga elaru kudutha motivation la dance ye panen Apa felt enakunu oru circle varanju adhukulaiye irundha enna yaro free panivitamadhiri Ovvoru tymum thambu solikudukumpodhu avalo motivate pannuvaru mathavangaluku adhu epdi nu theriyala but that's means a lot to me 🤗 We love him and you a lot da❤️🫂 
+    </p>
+  </div>
+
+  <img src="raji.jpg" alt="Scrapbook Memory Raji">
+</div>
+
+      <div class="scrap-card">
+  <img src="gokul.jpg" alt="Scrapbook Memory Gokul">
+
+  <div class="scrap-text">
+    <h2>Gokul</h2>
+
+    <p>
+      <strong>A Dance that holds a special place in my heart 💖</strong><br>
+      Kun Faya Kun song thaan enaku romba special 🤩 because athula CB bro fast aana movements la potaaru 🔥,
+      enaku antha maathiri fast movements la aadanum nu romba aasai 😍
+      nan ethir paakave illa CB bro antha maathiri steps enaku kodupaaru nu 💃
+      <br><br>
+
+      <strong>My all time favourite choreography of yours 💫</strong><br>
+      Innum konjam neram song thaan enaku romba favourite 🎶
+      athula podra ellam steps um detailing la spr aa irukum 🔥
+      alaga oru movie paakura maathiri thaan irunthuchu 🎥
+      <br><br>
+
+      <strong>One sentence la solla mudiyathu 🤔</strong><br>
+      Ego suthama kedaiyathu yaaru kitta pesum pothum palagum pothum nan gavanicha vishayam 💕
+      avaru jollya ellar kittaiyum pesuraru 🤣
+      nan choreographer apdi nu gethu kaatrathu la onnumey illa 🙌
+      <br><br>
+
+      Avaroda dance thaam thakka theem thakka song la paathen 💃
+      avaru podra steps romba smooth aa irunthuchu 💫
+      nan appove avaru kitta poi pesanum nenaichen 🤗
+      aana konja naal kalichu avaravey enkitta vanthu pesunaaru 💬
+      romba familiar aana oru person kitta pesura maathiri thaan enaku feel aachu 😊
+      first time pesura maathiri la illa 🤗
+      <br><br>
+
+      <strong>A cherished memory 💭</strong><br>
+      Mr. Cool 😎 nan avara paathu romba inspire aana vishayam 💡
+      avaru romba cool aa irukaaru 😎
+      nan neraiya per aa cool aa irunthu paathuruken 🤣
+      but kandipa avanga romba interest eduthu porupa oru vishayam pannum pothu
+      kandipa antha edathula porumaiya elanthuruvaanga 🤝
+      ethaachum thappa pochu na 🙅‍♂️
+      <br><br>
+
+      But bro romba cool aa irunthaaru.
+      SOW 2025 la thaan nan nalla observe pannen.
+      Kandipa nan romba enjoy pannen 🥳
+      nan kasta pattu la practice pannave illa jollya irunthen avaru kooda dance pannum pothu
+      and enaku iruntha stage fear um suthama poidichu 🤗
+      ennaiyum stage eri aada vachaaru 😘
+    </p>
+  </div>
+</div>
+
+        <div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Santhiya</h2>
+
+    <p>
+      <strong>A dance that holds a special place in my heart 💖</strong><br>
+      It was my first time dancing with you for Pongal celebration 2024.<br>
+      I was hesitant as it was the first time dancing in a different team 🤔.<br>
+      But I can tell now it was one of my most favourite performances 🎉.<br>
+      Each day of practice was utmost fun and enjoyable 😄.<br>
+      It was a wholesome experience, and it was so close to my heart ❤️.<br>
+      Thanks to you for giving so much confidence and motivating the best 🙏
+      <br><br>
+
+      <strong>My all-time favorite choreography 🤩</strong><br>
+      For me, it was Anal Melae Pani Thuli 🎶.<br>
+      I was in awestruck on that performance.<br>
+      Each step you did so well 😲
+      <br><br>
+
+      <strong>One liner about you 😎</strong><br>
+      Mr. Cool 😎<br>
+      In all chaos, he can handle it so well.
+      <br><br>
+
+      <strong>A cherished memory 💫</strong><br>
+      It was the first time I performed in duo with my friend 👫.<br>
+      He is the first one who motivated, appreciated, and gave feedback 💬.
+    </p>
+  </div>
+
+  <img src="santhiya.jpg" alt="Scrapbook Memory Santhiya">
+</div>
+
+    <div class="scrap-card">
+  <img src="kavya.jpg" alt="Scrapbook Memory Kavya">
+
+  <div class="scrap-text">
+    <h2>Kavya</h2>
+
+    <p>
+      Hello My dear Sibi Eata...! 💖
+      <br><br>
+
+      One of my favorite person in office. 🏢✨<br>
+      I really don't know to specifically highlight the dance performance with you as a choreography. 💃🎭<br>
+      Honestly, all the performances with our team were so special for me. 🤗💫
+      <br><br>
+
+      <strong>A dance that holds a special place in my heart 💞</strong><br>
+      "Onakka Muffini..." dance holds a special place in my heart as far as I remember. 💞🎶
+      <br><br>
+
+      Thanks for the memorable home-like feeling rather than just as a choreographer. 🏡❤️<br>
+      Grateful and happy to be with you as a lil sister... Always! 👧🤍
+      <br><br>
+
+      <strong>One liner about you 🌟</strong><br>
+      You always cherish me and gave me inspiring words whenever I made a mistake in my dance. 🌟🙏<br>
+      You let me feel free and comfortable rather than scolding me... 😌💕<br>
+      I truly admire that comfort with you, brother. 🤝💙
+      <br><br>
+
+      I don’t want to make this an essay! 📝😆<br>
+      To be brief…<br>
+      I’m really joyful to be with you and our team for dance, 💃🕺<br>
+      and I’m eagerly looking forward to a big performance together. 🎉🔥
+      <br><br>
+
+      "Happy Happy Birthday to one of the most charming, supportive, and lovable persons — my Sibi Eata...!" 🎂🎊🎁
+    </p>
+  </div>
+</div>
+
+      
+    <div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Sandeep</h2>
+
+    <p>
+      <strong>A dance that holds a special place in my heart 💖</strong><br>
+      The performance we did together in April 2023 with Inbha and Sadham Anna as well will always remain close to my heart — “The Boys” for the very first time 🎉.
+      <br><br>
+
+      From rehearsals filled with laughter 😂 to that magical moment on stage when everything fell into place ✨,<br>
+      dancing beside you felt effortless and powerful 💪.<br>
+      That performance wasn’t just about the steps 💃;<br>
+      it was about our shared passion 🔥, fun 🎉, sync 💕, and trust 🤝.
+      <br><br>
+
+      <strong>My all-time favorite choreography of Sibi 💫</strong><br>
+      Contemporary of "Annul Maelae" 🎶 in which I felt speechless 😲 and enjoyed a lot that entire performance 🌟.<br>
+      The way he brought emotion 💕, precision 🎯, and originality 🔥 into every move left me awestruck 😍.<br>
+      He has a way of telling stories through dance that makes everyone stop and watch in awe 🤯.
+      <br><br>
+
+      <strong>One liner about you 🙌</strong><br>
+      He is the kind of dancer who doesn’t just move to the music... he becomes the music! 🎵
+      <br><br>
+
+      <strong>A cherished memory 💭</strong><br>
+      I still remember when our team was struggling with the SOW 2024 sequence and felt like giving up 😩.<br>
+      There was a time I felt completely lost in my own doubts 🤔 and I wanted to walk away.
+      <br><br>
+
+      But he motivated me and made me trust in myself 💪,<br>
+      and made me execute it well at that time 💯.<br>
+      I’ll forever hold this friendship as one of the purest and most meaningful gifts I’ve ever received 💕.
+    </p>
+  </div>
+
+  <img src="sandeep.jpg" alt="Scrapbook Memory Sandeep">
+</div>
+
+    <div class="scrap-card">
+  <img src="sadham.jpg" alt="Scrapbook Memory Sadham">
+
+  <div class="scrap-text">
+    <h2>Sadham</h2>
+
+    <p>
+      <strong>A dance that holds a special place in my heart 💖</strong><br>
+      Maraimthirunthu Paarkum — Old to New Sequence dance with CB, Sandeep, and Inbha 💃
+      <br><br>
+
+      <strong>My all-time favorite choreography of him 🤩</strong><br>
+      His solo "Venpani Malare" 🎶
+      <br><br>
+
+      <strong>One liner about you ❤️</strong><br>
+      He is my grown-up son ♥️<br>
+      When you show him 50% love, you get it back in 500% 💕
+      <br><br>
+
+      <strong>A cherished memory 💫</strong><br>
+      His dance moves are itself a motivation 💪,<br>
+      and he doesn’t need to give advice orally 💬.<br>
+      Once a person sees his dance, they get motivated by it,<br>
+      which is all enough 💯.
+    </p>
+  </div>
+</div>
+
+    <div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Bhuvi</h2>
+
+    <p>
+      Today is a special day for you because it is your birthday 😅<br>
+      <strong>Happiest born day da mapla ❤️</strong>
+      <br><br>
+
+      Live long and stay blessed with my BF 😅<br>
+      Having you as a friend is one of the greatest blessings in my life.<br>
+      You have been a wonderful and special friend to me 😍.
+      <br><br>
+
+      Our bond continues with the last breath 🫂.
+      <br><br>
+
+      Once again,<br>
+      <strong>Happy Birthday da dancer uhhhhh!!!! 🥳</strong>
+    </p>
+  </div>
+
+  <img src="bhuvi.jpg" alt="Scrapbook Memory Bhuvi">
+</div>
+
+    <div class="scrap-card">
+  <img src="swetha.jpg" alt="Scrapbook Memory Swetha">
+
+  <div class="scrap-text">
+    <h2>Swetha</h2>
+
+    <p>
+      <strong>HAPPIEST BIRTHDAY MR. MOTIVATION 🎉🎂</strong>
+      <br><br>
+
+      <strong>A dance that holds a special place in my heart 💖</strong><br>
+      Dancing to Venmegam and Enga Pora Raasa with your choreo felt like pouring our hearts into every step 💃.<br>
+      It was an emotion I'll always hold 😍.
+      <br><br>
+
+      <strong>My all-time favorite choreography of yours 🤩</strong><br>
+      Un Vizhigalil from Maan Karate and Vasantha Mullai complete fun-based songs,<br>
+      which were totally accomplished by CB's choreo 🥳.
+      <br><br>
+
+      <strong>One liner about you 💫</strong><br>
+      A soul who dances with grace and gives with humility,<br>
+      never letting ego steal the rhythm of his heart 💫.
+      <br><br>
+
+      <strong>A cherished memory 💭</strong><br>
+      I won't forget my 1st day dance practice where I was totally frightened 😬.<br>
+      You comforted me very well like we were familiar 🤗.<br>
+      From that day till today, he has taught me without any hesitation 🙏.<br>
+      He won't differentiate anyone by dance,<br>
+      that is the most common point which I have received from our dance team 💕.
+      <br><br>
+
+      SOW 2024 where I gave all my 100%, mainly because of CB,<br>
+      and the rest completely goes to the team 💯.<br>
+      “Dance without any fear” — that word reaaallllyyy helped me from the 1st till today 💪.
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Jyo</h2>
+
+    <p>
+      Happy happy Birthday my dear Anna ❤️<br>
+      You will always be my sweet, cute and forever best brother 💯🥳<br>
+      Thanks for guiding me in a good way always 🫶🏻<br>
+      May all your dreams and wishes come true Anna 🥰
+      <br><br>
+
+      <strong>A dance that holds a special place in my heart 😍</strong><br>
+      SOW-2024 ❤️<br>
+      I will never forget those beautiful 30 days, I guess 🥹<br>
+      Happy happy days of my life with our team 😍<br>
+      Only once I have performed with you Anna... More to go 😁
+      <br><br>
+
+      <strong>All-time favourite choreography ♥️</strong><br>
+      Innu Konjam Neram 😩♥️<br>
+      Has my whole heart 💯<br>
+      Not only this, I love each and every choreography of yours,<br>
+      yet this is my special one 🫶🏻
+      <br><br>
+
+      <strong>One liner about you 🫡</strong><br>
+      Perfectionist 🫡💯
+      <br><br>
+
+      <strong>A cherished memory 🫂</strong><br>
+      From September 2024 till now, I cherish every moment 🫂<br>
+      Help in the sense — he gave me strength and support to dance very easily in front of all.<br>
+      Motivation — 😂 Name itself proves that he is such a perfect motivation guy who always motivates 🤣
+      <br><br>
+
+      Jokes apart...<br>
+      A leader has this power called Motivation 💯<br>
+      CB na, you are doing that in a lovable way ❤️<br>
+      You gave me many advices which I still follow 🫶🏻
+      <br><br>
+
+      Overall, you are a 💎 GEM.
+      <br><br>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;With Nariya paasam<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jyo 👸🏻💃🏻
+    </p>
+  </div>
+
+  <img src="jyo.jpg" alt="Scrapbook Memory Jyo">
+</div>
+
+
+<div class="scrap-card">
+  <img src="farhana.jpg" alt="Scrapbook Memory Farhana">
+
+  <div class="scrap-text">
+    <h2>Farhana</h2>
+
+    <p>
+      <strong>In one sentence about Sibi 🙌</strong><br>
+      He is a pure hearted person ❤️<br>
+      and he gives more respect and value to the relations 💕
+      <br><br>
+
+      When I started dancing in Wipro for the first time,<br>
+      I was really scared 😨<br>
+      but you gave me motivation 💪 that I can do it 💯.
+      <br><br>
+
+      You taught me every step with so much patience 🙏<br>
+      that I will never forget 🙏.
+      <br><br>
+
+      Still, I remember my first performance with you Sibi 💃.<br>
+      Not only in the first performance,<br>
+      up to my last performance, you had the same patience 😊<br>
+      and I really like that in you Sibi 💕.
+      <br><br>
+
+      Finally, you are one of the very good persons 🙏<br>
+      I have seen in my life Sibi 💖.<br>
+      I learnt dance from you,<br>
+      as well as I learnt how to respect others 🤝.
+      <br><br>
+
+      And the way you treat us like family 👪,<br>
+      I really like that Sibi 😊.
+    </p>
+  </div>
+</div>
+
+        <div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Surekha</h2>
+
+    <p>
+      I wish your life always be a beautiful blend of Passion and Profession 💖.<br>
+      <strong>HAPPIEST BDAY WISHES SIBIiiiiii... 🎉🎂</strong>
+      <br><br>
+
+      <strong>A dance that holds a special place 💖</strong><br>
+      Thank you for Anal Meley choreography 🙏.<br>
+      Antha mathiri choreo marupadi aadvana theriala 🔥,<br>
+      and I can also dance these styles nu enake feel panna vacha oru special performance 💃.
+      <br><br>
+
+      <strong>All-time favourite choreography 🤩</strong><br>
+      Oh Baby performance is my favourite of yours.<br>
+      Neenga atha deliver panina vitham and neenga aadi na patha,<br>
+      en mind la nikara 1st performance 🔥.<br>
+      So that is my favourite 💯.
+      <br><br>
+
+      <strong>One liner about him 😊</strong><br>
+      A decent guy who has no ego to talk with people 🤝.<br>
+      Always tries to make people feel ease around him 🌈.
+      <br><br>
+
+      <strong>A cherished memory 💭</strong><br>
+      When I doubted myself, he believed in me<br>
+      and made me believe that I can also dance a style like Anal Meley 💪.
+      One time he said, “Adda porom, nama best nama kuduthutu vantharalam.<br>
+      Mudinja apom inum konjam practice panirukalamnu yosika venam.” 🤔<br>
+      I always try to follow this advice 💯.
+      Correct ah practice panina elarume ela style uh aadalamnu 💃.
+      You split your choreography to all your team members
+      and make everyone feel like a main dancer,
+      giving the spotlight to all 🌟.
+      <br><br>
+
+      You're always a best choreographer than a dancer for me.
+      <br><br>
+
+      <strong>Happy birthday Sibi bro 🎂</strong><br>
+      Wishing you a year filled with happiness 😊,<br>
+      good health 🥗 and peace of mind 🙏.
+    </p>
+  </div>
+
+  <img src="surekha.jpg" alt="Scrapbook Birthday Wishes">
+</div>
+
+    <div class="scrap-card">
+  <img src="images/jayanthi.jpg" alt="Scrapbook Memory Jayanthi">
+
+  <div class="scrap-text">
+    <h2>Jayanthi</h2>
+
+    <p>
+      <strong>A dance that holds a special place in my heart 💖</strong><br>
+      That was my second dance in the CMDC dance club and he is my choreographer 🙌<br>
+      Ref: Varayo Varayo song 🎶<br>
+      He taught me literally western and lyrical dance 💃<br>
+      That was my first time doing that style and also being new to the team,<br>
+      still he made me comfortable 😊 and encouraged me a lot 💕<br>
+      and I hope I did well.
+      <br><br>
+
+      <strong>My all-time favorite choreography 🤩</strong><br>
+      I like all the choreographies he has done except Poraney Poraney song 😂<br>
+      because it's my favvvvvvvvvv 🤣
+      <br><br>
+
+      <strong>One liner about you 🙌</strong><br>
+      King of Kalaikurathu 🥲
+      <br><br>
+
+      <strong>A cherished memory 💭</strong><br>
+      Diwali dance done in white tees and black shirt 👗<br>
+      Rmboo Rmboo special because avloo fun and enjoy panni aaduna dance 😄<br>
+      Very supportive in fact 🤝<br>
+      He only figured out endha style nan nalla pandren 🤔<br>
+      and I am expecting him to do more choreography in that 💕.
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Saranya</h2>
+
+    <p>
+      <strong>A dance that holds a special place 💖</strong><br>
+      My first performance at Wipro — Sol Pechu song 💃
+      <br><br>
+
+      <strong>Favorite choreography 💥</strong><br>
+      All SOW choreographies 💥
+      <br><br>
+
+      <strong>One liner about you 😍</strong><br>
+      So friendly, always cares about us,<br>
+      no ego and very simple 😍
+      <br><br>
+
+      <strong>Memories to cherish 🤗</strong><br>
+      Ennayum vechi choreo panni,<br>
+      porumaiya thittama motivate panni aada vecharu.<br>
+      Motivation avaru choreo dance pannum bodhu mattum illa,<br>
+      always irukkum 🤗
+    </p>
+  </div>
+
+  <img src="images/saranya.jpg" alt="Scrapbook Memory Saranya">
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/ramesh.jpg" alt="Scrapbook Memory Ramesh">
+
+  <div class="scrap-text">
+    <h2>Ramesh</h2>
+
+    <p>
+      Nalla etharthamana character,<br>
+      epome jollya sirika vechuthu irupanga,<br>
+      athu enaku pudikum 🤗🥰
+      <br><br>
+
+      Dance semmaya aaduvaru,<br>
+      athu romba pudikum ✨😍
+      <br><br>
+
+      Anna oda Santhipome Kanakalil song performance enaku romba pidikum 😍
+      <br><br>
+
+      Wish you many more happy returns of the day annae ✨🤩❤<br>
+      Stay blessed and live long ✨🥰😇🤗<br>
+      Wish you all the success in your life ✨🤩
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Ajeeth</h2>
+
+    <p>
+      Happy Birthday to my amazing brother 😘!
+      <br><br>
+
+      Thank you for always being my constant support,<br>
+      my secret keeper, and my biggest cheerleader 🔥
+      <br><br>
+
+      May this year bring you happiness, strength,<br>
+      and everything you’ve been wishing for 🎉✨
+      <br><br>
+
+      Keep shining and never stop being the awesome person you are 😎🥳
+      <br><br>
+
+      <strong>My Favourite choreography 😍💯</strong><br>
+      Ennavale Adi Ennavale 😍💯
+    </p>
+  </div>
+
+  <img src="images/ajeeth.jpg" alt="Scrapbook Memory Ajeeth">
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/rampriya.jpg" alt="Scrapbook Memory Rampriya">
+
+  <div class="scrap-text">
+    <h2>Rampriya</h2>
+
+    <p>
+      <strong>My all-time favorite choreography of his 💥💃</strong><br>
+      Dailamo Dailamoo 💥💃
+      <br><br>
+
+      <strong>One liner about him 🤗😍</strong><br>
+      Such a sweet and caring soul 🤗😍
+      <br><br>
+
+      Wishing him all the happiness and success in his life.<br>
+      Happy Birthday to my brother Sibi....<br>
+      Stay blessed and happy with your loved ones 🥰🤩❤️
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Chitra</h2>
+
+    <p>
+      Hey Chottu bhai,
+      <br><br>
+
+      You are a Rockstar ✨<br>
+      Keep rocking as always.
+      <br><br>
+
+      You will definitely succeed in both your profession and passion 👍<br>
+      Akka will always support you wherever you go 🤗
+      <br><br>
+
+      Happy birthday Chottu ❣️<br>
+      Another adventure-filled year awaits you.<br>
+      Welcome it by celebrating your birthday with pomp and splendor 🎊🎊
+    </p>
+  </div>
+
+  <img src="images/chitra.jpg" alt="Scrapbook Memory Chitra">
+</div>
+
+    <div class="scrap-card">
+  <img src="images/aditiya.jpg" alt="Scrapbook Memory Aditiya">
+
+  <div class="scrap-text">
+    <h2>Aditiya</h2>
+
+    <p>
+      <strong>Favourite choreography 😍</strong><br>
+      Venmathi during Onam 2023 😍
+      <br><br>
+
+      <strong>One liner about him ♥️🥰</strong><br>
+      Charming, humble soul who starts off quiet but soon bonds like family.<br>
+      Dance moves like a pro with no ego 😎,<br>
+      and always wears a heartwarming smile ♥️🥰
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Dinesh</h2>
+
+    <p>
+      Happy birthday SIBI bro 🎂<br>
+      I wish you to grow higher and higher.
+      <br><br>
+
+      <strong>One liner about you 🤗</strong><br>
+      Good and a cool guy,<br>
+      always wears a smile on his face 🤗
+      <br><br>
+
+      <strong>Favourite choreography 😍</strong><br>
+      Ennavale Adi Ennavale 😍
+    </p>
+  </div>
+
+  <img src="images/dinesh.jpg" alt="Scrapbook Memory Dinesh">
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/praveen.jpg" alt="Scrapbook Memory Praveen">
+
+  <div class="scrap-text">
+    <h2>Praveen</h2>
+
+    <p>
+      Best wishes on your birthday Sibi ♥️✨<br>
+      Hope this year will give you the best of happiness<br>
+      and cheerfulness to your life ❣️💫
+      <br><br>
+
+      Wish you to do the right things<br>
+      for the right people whom you love ❣️<br>
+      and care for the foremost 🤗.
+      <br><br>
+
+      Happy birthday once again,<br>
+      and best of luck for your future 🥳🎉.
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Satya</h2>
+
+    <p>
+      Sibi na,<br>
+      your dance and expression while dancing<br>
+      enaku romba pudikum ❤️
+      <br><br>
+
+      Happiee Birthday na 😻<br>
+      You always have a cute smile on your face.<br>
+      Wishing you the happiness forever 🤗
+    </p>
+  </div>
+
+  <img src="images/satya.jpg" alt="Scrapbook Memory Satya">
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/navya.jpg" alt="Scrapbook Memory Navya">
+
+  <div class="scrap-text">
+    <h2>Navya</h2>
+
+    <p>
+      Happy birthday dancer 🤭💃🏻<br>
+      whose movements are a symphony of grace and beauty 💫.
+      <br><br>
+
+      Your passion for dance is evident in every performance 💃,<br>
+      and it always leaves us feeling inspired 💖.
+      <br><br>
+
+      May your birthday be filled with music 🎵,<br>
+      rhythm 💃,<br>
+      and endless opportunities to share your love of dance<br>
+      with the world 🌎💫.
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/mohan.jpg" alt="Scrapbook Memory Mohan">
+
+  <div class="scrap-text">
+    <h2>Mohan</h2>
+
+    <p>
+      <strong>One liner about him ❤️</strong><br>
+      One of those few good friends I've got in Wipro Coimbatore office ❤️
+      <br><br>
+
+      <strong>Favourite choreography 💥</strong><br>
+      Malama Pitha 💥<br>
+      You did it at Barbeque Nation.
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Kowsi</h2>
+
+    <p>
+      <strong>All-time favourite choreography 💃💥</strong><br>
+      Ponmagal Vandhal 💃💥
+      <br><br>
+
+      #Always my Anna 😊🤩<br>
+      #Hbd Anna 🎂
+    </p>
+  </div>
+
+  <img src="images/kowsi.jpg" alt="Scrapbook Memory Kowsi">
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/siddharth.jpg" alt="Scrapbook Memory Siddharth">
+
+  <div class="scrap-text">
+    <h2>Siddharth</h2>
+
+    <p>
+      Happy birthday to the amazing dancer of CMDC 💥💥💥
+    </p>
+  </div>
+</div>
+
+
+<div class="scrap-card reverse">
+  <div class="scrap-text">
+    <h2>Gp</h2>
+
+    <p>
+      <strong>Favourite choreography</strong><br>
+      Vasantha Mullai
+      <br><br>
+
+      <strong>Memories</strong><br>
+      June Ponaal<br>
+      Especially that Vaanam Vanthu step — life long marakkathu 😂
+    </p>
+  </div>
+
+  <img src="images/gp.jpg" alt="Scrapbook Memory Gp">
+</div>
+
+
+<div class="scrap-card">
+  <img src="images/reeba.jpg" alt="Scrapbook Memory Reeba">
+
+  <div class="scrap-text">
+    <h2>Reeba</h2>
+
+    <p>
+      Happy birthday bro 🎂♥️<br>
+      Be happy always and dance more 🤗
+      <br><br>
+
+      #Kind<br>
+      #Friendly brother
+    </p>
+  </div>
+</div>
+
+    </section>
+
+    <div class="final-message">
+      With Love — Your Friends & Beloved one ♥️
+    </div>
+
+    <div class="footer-text">
+      🦋 Happy Birthday CB🦋
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "page3.html";
+    }
+
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+
+      sparkle.className = "sparkle";
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = Math.random() * window.innerHeight + "px";
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(function () {
+        sparkle.remove();
+      }, 1500);
+    }
+
+    function createSoftStar() {
+      const star = document.createElement("div");
+      const stars = ["✦", "✧", "★", "☆"];
+
+      star.className = "soft-star";
+      star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.fontSize = 12 + Math.random() * 20 + "px";
+
+      document.body.appendChild(star);
+
+      setTimeout(function () {
+        star.remove();
+      }, 2600);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      const colors = ["#ff9fb3", "#ffd76b", "#b8f7e6", "#e6d7ff", "#ffffff"];
+
+      confetti.className = "mini-confetti";
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.top = Math.random() * window.innerHeight * 0.45 + "px";
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.transform = "rotate(" + Math.random() * 180 + "deg)";
+
+      document.body.appendChild(confetti);
+
+      setTimeout(function () {
+        confetti.remove();
+      }, 3900);
+    }
+
+    setInterval(createSparkle, 260);
+    setInterval(createSoftStar, 320);
+    setInterval(createConfetti, 700);
+  </script>
+
+</body>
+</html>
