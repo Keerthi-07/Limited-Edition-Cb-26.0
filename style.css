@@ -1171,3 +1171,20 @@ footer {
     font-size: 24px;
   }
 }
+
+@media(max-width:720px) {
+  .initials {
+    font-size: 60px; /* was 86px, still too big for small phones */
+    line-height: 1.1;
+  }
+  .lead,
+  .line2 {
+    font-size: 15px; /* bump down slightly */
+  }
+  .progress-wrap {
+    width: 90%; /* was 84%, give more room */
+  }
+  .main-content {
+    padding: 20px 15px; /* tighter padding */
+  }
+}
